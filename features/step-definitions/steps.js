@@ -6,48 +6,47 @@ Given("I am on Login page", async function() {
     await browser.navigateTo("https://the-internet.herokuapp.com/login");
 });
 
-When('I enter "tomsmith" username', async function() {
-    await $("#username").setValue("tomsmith");
+When('I enter {string} username', async function(username) {
+    await $("#username").setValue(username);
 });
 
-When('I enter "sdfsadg" username', async function() {
-    await $("#username").setValue("sdfsadg");
-});
 
-When('I enter "SuperSecretPassword!" password', async function() {
+When('I enter {string} password', async function(password) {
     const passwordInput = await $("#password");
-    await passwordInput.setValue("SuperSecretPassword!");
+    await passwordInput.setValue(password);
 });
 
-When('I enter "arhsrtnsrtns" password', async function() {
-    const passwordInput = await $("#password");
-    await passwordInput.setValue("arhsrtnsrtns!");
-});
 
 When('I press on Login button', async function() {
     const button = await $("button[type=submit]");
-    button.click();
+    await button.click();
 });
 
-Then('I see a message "You logged into a secure area!"', async function() {
+Then('I see a message {string}', async function(message) {
     const flashMessage = await $("#flash");
     await expect(flashMessage)
-        .toHaveText(expect.stringContaining("You logged into a secure area!"));
+        .toHaveText(expect.stringContaining(message));
 });
 
-Then('I see a message "Your username is invalid!"', async function() {
-    const flashMessage = await $("#flash");
-    await expect(flashMessage)
-        .toHaveText(expect.stringContaining("Your username is invalid!"));
-});
+Then('I {word} see the Logout button', async function(visibility) {
+    if (visibility === "do"){
+        await expect($("i*=Logout")).toBeDisplayed();
+    }else if (visibility ==="don't"){ 
+        await expect($("i*=Logout")).not.toBeDisplayed();
+    }else {
+        throw Error(`visibility ${visibility} not supported`)
+    }
 
-Then('I see the Logout button', async function() {
-    const logoutButton = await $("i*=Logout");
-    await expect(logoutButton).toBeDisplayed();
-});
+    });
 
-Then("I don't see the Logout button", async function() {
-    const logoutButton = await $("i*=Logout");
-    await expect(logoutButton).not.toBeDisplayed();
-});
+
+// Then('I see the Logout button', async function() {
+//     const logoutButton = await $("i*=Logout");
+//     await expect(logoutButton).toBeDisplayed();
+// });
+
+// Then("I don't see the Logout button", async function() {
+//     const logoutButton = await $("i*=Logout");
+//     await expect(logoutButton).not.toBeDisplayed();
+// });
 
