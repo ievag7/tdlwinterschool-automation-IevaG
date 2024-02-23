@@ -3,9 +3,11 @@ import { Given, When, Then } from "@wdio/cucumber-framework";
 import {browser, $} from "@wdio/globals";
 
 import loginPage from "../page-objects/login.page.js";
+import AllureReporter from "@wdio/allure-reporter";
 
 
 When('I enter {string} username', async function(username) {
+    // AllureReporter.addArgument(`username`, username)
     await loginPage.usernameInput.setValue(username);
 });
 

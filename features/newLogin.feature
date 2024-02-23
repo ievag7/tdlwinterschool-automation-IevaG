@@ -22,7 +22,7 @@
 
         Feature: Login
 
-    Scenario Outline: Log in user username and password
+    Scenario Outline: Log in user <username> username and <password> password
         Given I am on login page
         When I enter <username> username
         And I enter <password> password
